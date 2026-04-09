@@ -23,9 +23,10 @@ const PORT = 8888; // use fixed port to avoid issues with .env loading during de
 // ─── STATE ────────────────────────────────────────────────────────────────────
 
 interface StatusData {
-  status: PresenceStatus | "offline";
-  activities: { name: string; type: number; details?: string | null; state?: string | null }[];
-  spotify: { song: string; artist: string; album: string; albumArt: string } | null;
+  status: string;
+  customStatus?: { text: string } | null;
+  activity?: { name: string; details: string; state: string; largeImage: string | null } | null;
+  spotify: { song: string; artist: string; album: string; albumArt: string | null } | null;
   lastSeen: string;
 }
 
@@ -71,6 +72,7 @@ function parsePresence(presence: any) {
       spotify: spotify ? {
         song: spotify.details || "",
         artist: spotify.state || "",
+        album: (spotify.assets && typeof spotify.assets.largeText === 'string') ? spotify.assets.largeText : "",
         albumArt: spotify.assets ? spotify.assets.largeImageURL?.() : null
       } : null,
       lastSeen: new Date().toISOString()
