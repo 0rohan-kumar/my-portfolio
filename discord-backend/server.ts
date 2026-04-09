@@ -16,22 +16,30 @@ dotenv.config();
 // 4. Invite bot to a server you're in (needs no permissions, just needs to see you)
 // 5. Get YOUR Discord user ID: Settings → Advanced → Developer Mode ON → right-click your name → Copy ID
 
-const BOT_TOKEN = process.env.DISCORD_BOT_TOKEN ?? "YOUR_BOT_TOKEN_HERE";
-const YOUR_USER_ID = process.env.DISCORD_USER_ID ?? "YOUR_DISCORD_USER_ID_HERE";
-const PORT = 8888; // use fixed port to avoid issues with .env loading during dev
+const BOT_TOKEN = process.env.DISCORD_BOT_TOKEN;
+const YOUR_USER_ID = process.env.DISCORD_USER_ID || "1372232239751893074";
+const PORT = process.env.PORT || 8888;
+const FRONTEND_URL = process.env.FRONTEND_URL || "*";
+
+if (!BOT_TOKEN || BOT_TOKEN === "YOUR_BOT_TOKEN_HERE") {
+  console.error("❌ ERROR: DISCORD_BOT_TOKEN is missing in .env");
+  process.exit(1);
+}
 
 // ─── STATE ────────────────────────────────────────────────────────────────────
 
 interface StatusData {
-  status: PresenceStatus | "offline";
-  activities: { name: string; type: number; details?: string | null; state?: string | null }[];
-  spotify: { song: string; artist: string; album: string; albumArt: string } | null;
+  status: string;
+  customStatus: { text: string } | null;
+  activity: { name: string; details: string; state: string; largeImage: string | null } | null;
+  spotify: { song: string; artist: string; albumArt: string | null } | null;
   lastSeen: string;
 }
 
 let statusData: StatusData = {
   status: "offline",
-  activities: [],
+  customStatus: null,
+  activity: null,
   spotify: null,
   lastSeen: new Date().toISOString(),
 };
@@ -51,12 +59,15 @@ function parsePresence(presence: any) {
   try {
     const activities = presence.activities || [];
     
-    // 1. Identify key activities
+    // 1. Identify key activities with explicit priority
     const spotify = activities.find((a: any) => a.name === "Spotify");
-    const custom = activities.find((a: any) => a.type === 4 || a.name === "Custom Status");
-    // Priority: Playing (0), Watching (3), Listening (2)
-    const app = activities.find((a: any) => a.type === 0 || a.type === 3 || a.type === 2) || 
-                activities.find((a: any) => a.type !== 4 && a.name !== "Spotify");
+    const custom = activities.find((a: any) => a.type === 4);
+    
+    // Priority: Game (0) -> Streaming (1) -> Watching (3) -> Listening non-Spotify (2)
+    const app = activities.find((a: any) => a.type === 0) || 
+                activities.find((a: any) => a.type === 1) ||
+                activities.find((a: any) => a.type === 3) ||
+                activities.find((a: any) => a.type === 2 && a.name !== "Spotify");
 
     // 2. Map only what we need safely
     statusData = {
@@ -106,7 +117,7 @@ client.on("error", err => console.error("Discord error:", err));
 // ─── EXPRESS API ──────────────────────────────────────────────────────────────
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: FRONTEND_URL }));
 app.use(express.json());
 
 app.get("/status", (_req, res) => {

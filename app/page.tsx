@@ -110,30 +110,30 @@ const ACTIVITY_THEMES = {
   idle: { color: "#54a0ff", glow: "rgba(84, 160, 255, 0.08)" },
 };
 
-function AuraBackground({ status }: { status: DiscordStatus }) {
-  const isDark = true; // Assuming dark mode for the premium vibe
+function AuraBackground({ status, theme }: { status: DiscordStatus; theme: Theme }) {
+  const isDark = theme === "dark";
 
   // Decide theme
-  let theme = ACTIVITY_THEMES.idle;
+  let themeObj = ACTIVITY_THEMES.idle;
   if (status.activity === "Code" || status.details?.toLowerCase().includes("portfolio")) {
-    theme = ACTIVITY_THEMES.coding;
+    themeObj = ACTIVITY_THEMES.coding;
   } else if (status.activity?.toLowerCase().includes("youtube")) {
-    theme = ACTIVITY_THEMES.youtube;
+    themeObj = ACTIVITY_THEMES.youtube;
   } else if (status.activity) {
-    theme = ACTIVITY_THEMES.gaming;
+    themeObj = ACTIVITY_THEMES.gaming;
   }
 
   return (
     <div style={{
       position: "fixed", inset: 0, zIndex: -1, pointerEvents: "none",
-      background: "#060a12", overflow: "hidden"
+      background: isDark ? "#060a12" : "#f5f5f0", transition: "background 0.6s ease", overflow: "hidden"
     }}>
       {/* Primary breathing glow */}
       <div style={{
         position: "absolute", top: "50%", left: "50%",
         width: "120vw", height: "120vh",
         transform: "translate(-50%, -50%)",
-        background: `radial-gradient(circle at center, ${theme.glow} 0%, transparent 70%)`,
+        background: `radial-gradient(circle at center, ${themeObj.glow} 0%, transparent 70%)`,
         transition: "background 3s ease-in-out",
         animation: "aura-breath 12s ease-in-out infinite"
       }} />
@@ -986,15 +986,11 @@ function useDiscordStatus(): DiscordStatus {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-        const BACKEND_URL = isLocal
-          ? "http://127.0.0.1:8888"
-          : (process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8888");
-
+        const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8888";
         const res = await fetch(`${BACKEND_URL}/status`);
         const json = await res.json();
         if (!json.success) return;
-
+        
         const d = json.data;
         setStatus({
           status: d.status === "dnd" || d.status === "online" || d.status === "idle" ? d.status : "offline",
@@ -1016,7 +1012,7 @@ function useDiscordStatus(): DiscordStatus {
     };
 
     fetchStatus();
-    const id = setInterval(fetchStatus, 5000);
+    const id = setInterval(fetchStatus, 15000); // 15s to save resources
     return () => clearInterval(id);
   }, []);
 
@@ -1133,7 +1129,7 @@ export default function Home() {
       <ThemeToggle theme={theme} onToggle={() => setTheme(t => t === "dark" ? "light" : "dark")} />
 
       {/* 🌪️ Reactive Global Atmosphere 🌪️ */}
-      <AuraBackground status={discordStatus} />
+      <AuraBackground status={discordStatus} theme={theme} />
 
       {/* Legacy Redirection Link */}
       <a
