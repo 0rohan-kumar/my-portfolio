@@ -112,7 +112,7 @@ const ACTIVITY_THEMES = {
 
 function AuraBackground({ status }: { status: DiscordStatus }) {
   const isDark = true; // Assuming dark mode for the premium vibe
-  
+
   // Decide theme
   let theme = ACTIVITY_THEMES.idle;
   if (status.activity === "Code" || status.details?.toLowerCase().includes("portfolio")) {
@@ -130,14 +130,14 @@ function AuraBackground({ status }: { status: DiscordStatus }) {
     }}>
       {/* Primary breathing glow */}
       <div style={{
-        position: "absolute", top: "50%", left: "50%", 
+        position: "absolute", top: "50%", left: "50%",
         width: "120vw", height: "120vh",
         transform: "translate(-50%, -50%)",
         background: `radial-gradient(circle at center, ${theme.glow} 0%, transparent 70%)`,
         transition: "background 3s ease-in-out",
         animation: "aura-breath 12s ease-in-out infinite"
       }} />
-      
+
       {/* Grain/Texture overlay */}
       <div style={{
         position: "absolute", inset: 0, opacity: 0.03,
@@ -169,7 +169,7 @@ function playTick(freq = 880, vol = 0.04) {
     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
     osc.start(); osc.stop(ctx.currentTime + 0.12);
     setTimeout(() => ctx.close(), 200);
-  } catch {}
+  } catch { }
 }
 
 // ─── GLITCH TITLE ─────────────────────────────────────────────────────────────
@@ -230,12 +230,16 @@ function GlitchTitle({ theme }: { theme: Theme }) {
   return (
     <div style={{ position: "relative", display: "inline-block", cursor: "default" }} onClick={handleClick}>
       <div style={{ ...base, WebkitTextStroke: `1px ${stroke}`, position: "relative", zIndex: 2 }}>ROHAN</div>
-      <div aria-hidden style={{ ...base, WebkitTextStroke: "1px #ff7e5f", position: "absolute", top: 0, left: 0, zIndex: 1,
+      <div aria-hidden style={{
+        ...base, WebkitTextStroke: "1px #ff7e5f", position: "absolute", top: 0, left: 0, zIndex: 1,
         opacity: g ? 0.72 : 0, transform: g ? "translate(-6px,2px) skewX(-4deg)" : "none",
-        transition: "opacity 0.04s", clipPath: "polygon(0 26%,100% 26%,100% 52%,0 52%)" }}>ROHAN</div>
-      <div aria-hidden style={{ ...base, WebkitTextStroke: "1px #4fc3f7", position: "absolute", top: 0, left: 0, zIndex: 1,
+        transition: "opacity 0.04s", clipPath: "polygon(0 26%,100% 26%,100% 52%,0 52%)"
+      }}>ROHAN</div>
+      <div aria-hidden style={{
+        ...base, WebkitTextStroke: "1px #4fc3f7", position: "absolute", top: 0, left: 0, zIndex: 1,
         opacity: g ? 0.58 : 0, transform: g ? "translate(6px,-2px) skewX(2deg)" : "none",
-        transition: "opacity 0.04s", clipPath: "polygon(0 56%,100% 56%,100% 76%,0 76%)" }}>ROHAN</div>
+        transition: "opacity 0.04s", clipPath: "polygon(0 56%,100% 56%,100% 76%,0 76%)"
+      }}>ROHAN</div>
     </div>
   );
 }
@@ -262,16 +266,20 @@ function TypingTag({ theme }: { theme: Theme }) {
 
   const tc = theme === "dark";
   return (
-    <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 300, fontSize: "clamp(0.8rem,1.7vw,1.05rem)",
+    <div style={{
+      fontFamily: "'DM Sans',sans-serif", fontWeight: 300, fontSize: "clamp(0.8rem,1.7vw,1.05rem)",
       letterSpacing: "0.1em", color: tc ? "rgba(255,255,255,0.42)" : "rgba(0,0,0,0.45)",
       opacity: vis ? 1 : 0, transform: vis ? "translateY(0)" : "translateY(14px)",
       transition: "opacity 0.6s ease, transform 0.6s ease",
-      display: "flex", alignItems: "center", gap: "8px", marginTop: "0.75rem" }}>
+      display: "flex", alignItems: "center", gap: "8px", marginTop: "0.75rem"
+    }}>
       <span style={{ color: "#ff7e5f" }}>Rohan</span>
       <span style={{ color: tc ? "rgba(255,255,255,0.18)" : "rgba(0,0,0,0.2)" }}>—</span>
       <span>{text}</span>
-      <span style={{ display: "inline-block", width: "2px", height: "1em",
-        background: "#ff7e5f", animation: "blink 1s step-end infinite", verticalAlign: "middle" }} />
+      <span style={{
+        display: "inline-block", width: "2px", height: "1em",
+        background: "#ff7e5f", animation: "blink 1s step-end infinite", verticalAlign: "middle"
+      }} />
     </div>
   );
 }
@@ -345,17 +353,25 @@ function ParallaxBg({ theme }: { theme: Theme }) {
 
   const d = theme === "dark";
   return (
-    <div ref={ref} style={{ position: "absolute", inset: "-6%", pointerEvents: "none",
-      transition: "transform 0.14s linear", zIndex: 0, opacity: d ? 0.72 : 0.5 }}>
-      <div style={{ position: "absolute", width: "55vw", height: "55vw", borderRadius: "50%",
+    <div ref={ref} style={{
+      position: "absolute", inset: "-6%", pointerEvents: "none",
+      transition: "transform 0.14s linear", zIndex: 0, opacity: d ? 0.72 : 0.5
+    }}>
+      <div style={{
+        position: "absolute", width: "55vw", height: "55vw", borderRadius: "50%",
         background: `radial-gradient(circle,${d ? "rgba(255,126,95,0.06)" : "rgba(255,126,95,0.09)"} 0%,transparent 70%)`,
-        top: "5%", left: "18%", filter: "blur(55px)" }} />
-      <div style={{ position: "absolute", width: "44vw", height: "44vw", borderRadius: "50%",
+        top: "5%", left: "18%", filter: "blur(55px)"
+      }} />
+      <div style={{
+        position: "absolute", width: "44vw", height: "44vw", borderRadius: "50%",
         background: `radial-gradient(circle,${d ? "rgba(36,59,85,0.14)" : "rgba(100,140,200,0.08)"} 0%,transparent 70%)`,
-        bottom: "8%", right: "12%", filter: "blur(70px)" }} />
-      <div style={{ position: "absolute", width: "22vw", height: "22vw", borderRadius: "50%",
+        bottom: "8%", right: "12%", filter: "blur(70px)"
+      }} />
+      <div style={{
+        position: "absolute", width: "22vw", height: "22vw", borderRadius: "50%",
         background: `radial-gradient(circle,${d ? "rgba(114,137,218,0.05)" : "rgba(114,137,218,0.07)"} 0%,transparent 70%)`,
-        top: "42%", left: "62%", filter: "blur(40px)" }} />
+        top: "42%", left: "62%", filter: "blur(40px)"
+      }} />
     </div>
   );
 }
@@ -380,11 +396,13 @@ function NodeCard({ node, onClose, theme }: { node: NodeDef; onClose: () => void
   return (
     <div
       onClick={onClose}
-      style={{ position: "fixed", inset: 0, zIndex: 100,
+      style={{
+        position: "fixed", inset: 0, zIndex: 100,
         background: d ? "rgba(0,0,0,0.7)" : "rgba(255,255,255,0.7)",
         backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
         display: "flex", alignItems: "center", justifyContent: "center",
-        opacity: mounted ? 1 : 0, transition: "opacity 0.35s ease" }}
+        opacity: mounted ? 1 : 0, transition: "opacity 0.35s ease"
+      }}
     >
       <div
         onClick={e => e.stopPropagation()}
@@ -394,42 +412,52 @@ function NodeCard({ node, onClose, theme }: { node: NodeDef; onClose: () => void
           borderRadius: "20px",
           padding: "2rem 2.5rem",
           maxWidth: "340px", width: "90%",
-          boxShadow: `0 0 60px 10px ${node.glow.replace("0.7","0.3")}`,
+          boxShadow: `0 0 60px 10px ${node.glow.replace("0.7", "0.3")}`,
           transform: mounted ? "scale(1) translateY(0)" : "scale(0.88) translateY(30px)",
           transition: "transform 0.4s cubic-bezier(0.22,1,0.36,1)",
           textAlign: "center",
         }}
       >
         {/* Icon circle */}
-        <div style={{ width: 72, height: 72, borderRadius: "50%", margin: "0 auto 1rem",
+        <div style={{
+          width: 72, height: 72, borderRadius: "50%", margin: "0 auto 1rem",
           background: `radial-gradient(circle at 35% 35%, ${node.color}33 0%, ${node.color}11 100%)`,
           border: `1.5px solid ${node.color}66`,
           display: "flex", alignItems: "center", justifyContent: "center",
-          boxShadow: `0 0 24px 6px ${node.glow.replace("0.7","0.25")}` }}>
+          boxShadow: `0 0 24px 6px ${node.glow.replace("0.7", "0.25")}`
+        }}>
           <node.Icon size={30} strokeWidth={1.4} color={node.color} />
         </div>
 
-        <div style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: "1.6rem",
-          letterSpacing: "0.06em", color: d ? "#fff" : "#111" }}>
+        <div style={{
+          fontFamily: "'Bebas Neue',sans-serif", fontSize: "1.6rem",
+          letterSpacing: "0.06em", color: d ? "#fff" : "#111"
+        }}>
           {node.label}
         </div>
-        <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.9rem",
-          color: node.color, marginTop: "2px", letterSpacing: "0.05em" }}>
+        <div style={{
+          fontFamily: "'DM Sans',sans-serif", fontSize: "0.9rem",
+          color: node.color, marginTop: "2px", letterSpacing: "0.05em"
+        }}>
           {node.username}
         </div>
-        <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.82rem",
+        <div style={{
+          fontFamily: "'DM Sans',sans-serif", fontSize: "0.82rem",
           color: d ? "rgba(255,255,255,0.45)" : "rgba(0,0,0,0.45)",
-          marginTop: "0.75rem", lineHeight: 1.5 }}>
+          marginTop: "0.75rem", lineHeight: 1.5
+        }}>
           {node.bio}
         </div>
 
         <div style={{ display: "flex", gap: "10px", marginTop: "1.5rem" }}>
           <button
             onClick={handleOpen}
-            style={{ flex: 1, padding: "10px 0", borderRadius: "10px", border: "none", cursor: "pointer",
+            style={{
+              flex: 1, padding: "10px 0", borderRadius: "10px", border: "none", cursor: "pointer",
               background: node.color, color: "#fff",
               fontFamily: "'DM Sans',sans-serif", fontWeight: 500, fontSize: "0.88rem",
-              letterSpacing: "0.06em", transition: "filter 0.2s ease" }}
+              letterSpacing: "0.06em", transition: "filter 0.2s ease"
+            }}
             onMouseEnter={e => (e.currentTarget.style.filter = "brightness(1.15)")}
             onMouseLeave={e => (e.currentTarget.style.filter = "brightness(1)")}
           >
@@ -437,10 +465,12 @@ function NodeCard({ node, onClose, theme }: { node: NodeDef; onClose: () => void
           </button>
           <button
             onClick={onClose}
-            style={{ padding: "10px 16px", borderRadius: "10px", border: `1px solid ${node.color}44`,
+            style={{
+              padding: "10px 16px", borderRadius: "10px", border: `1px solid ${node.color}44`,
               cursor: "pointer", background: "transparent",
               color: d ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.4)",
-              fontFamily: "'DM Sans',sans-serif", fontSize: "0.88rem", transition: "border-color 0.2s" }}
+              fontFamily: "'DM Sans',sans-serif", fontSize: "0.88rem", transition: "border-color 0.2s"
+            }}
             onMouseEnter={e => (e.currentTarget.style.borderColor = node.color + "99")}
             onMouseLeave={e => (e.currentTarget.style.borderColor = node.color + "44")}
           >✕</button>
@@ -495,7 +525,7 @@ function OrbitalSystem({
     try {
       const saved = localStorage.getItem("rohan_last_node");
       if (saved !== null) lastClickedRef.current = parseInt(saved);
-    } catch {}
+    } catch { }
   }, []);
 
   // Lanyard Discord status
@@ -717,7 +747,7 @@ function OrbitalSystem({
     spawnRipple(e.clientX, e.clientY, NODES[i].color);
     playTick(880 + i * 80, 0.05);
     lastClickedRef.current = i;
-    try { localStorage.setItem("rohan_last_node", String(i)); } catch {}
+    try { localStorage.setItem("rohan_last_node", String(i)); } catch { }
     setActiveCard(i);
     energyRef.current[i] = 1;
   };
@@ -744,42 +774,51 @@ function OrbitalSystem({
           style={{ position: "absolute", inset: 0, pointerEvents: "none" }} />
 
         {/* Orbit ring */}
-        <div style={{ position: "absolute", width: ORBIT_RX * 2, height: ORBIT_RY * 2,
+        <div style={{
+          position: "absolute", width: ORBIT_RX * 2, height: ORBIT_RY * 2,
           borderRadius: "50%",
           border: `1px solid ${d ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.08)"}`,
           boxShadow: eggMode ? "0 0 30px 4px rgba(255,215,0,0.15) inset" : "none",
-          pointerEvents: "none", transition: "box-shadow 0.5s" }} />
+          pointerEvents: "none", transition: "box-shadow 0.5s"
+        }} />
 
         {/* ── CENTRAL ORB ── */}
         <div
-          style={{ position: "absolute", zIndex: 10, cursor: "pointer",
+          style={{
+            position: "absolute", zIndex: 10, cursor: "pointer",
             transition: "transform 0.38s cubic-bezier(0.22,1,0.36,1)",
-            transform: orbExpanded ? "scale(1.22)" : "scale(1)" }}
+            transform: orbExpanded ? "scale(1.22)" : "scale(1)"
+          }}
           onMouseEnter={() => { setOrbExpanded(true); playTick(600, 0.03); }}
           onMouseLeave={() => setOrbExpanded(false)}
           onClick={handleOrbClick}
         >
           {/* Spinning rings */}
           {[{ inset: -16, color: "rgba(255,126,95,0.22)", dur: "5s", dir: "normal" },
-            { inset: -27, color: "rgba(36,59,85,0.35)", dur: "9s", dir: "reverse" }
+          { inset: -27, color: "rgba(36,59,85,0.35)", dur: "9s", dir: "reverse" }
           ].map((r, i) => (
-            <div key={i} style={{ position: "absolute", inset: r.inset, borderRadius: "50%",
+            <div key={i} style={{
+              position: "absolute", inset: r.inset, borderRadius: "50%",
               border: `1px ${i === 1 ? "dashed" : "solid"} ${eggMode ? "rgba(255,215,0,0.5)" : r.color}`,
               opacity: orbExpanded ? 1 : 0, transition: "opacity 0.3s ease",
-              animation: `spin-slow ${r.dur} linear infinite ${r.dir}` }} />
+              animation: `spin-slow ${r.dur} linear infinite ${r.dir}`
+            }} />
           ))}
 
           {/* Discord status dot */}
-          <div style={{ position: "absolute", top: -2, right: -2, zIndex: 15,
+          <div style={{
+            position: "absolute", top: -2, right: -2, zIndex: 15,
             width: 16, height: 16, borderRadius: "50%",
             background: STATUS_COLORS[discordStatus.status],
             border: `2px solid ${d ? "#060a12" : "#f5f5f0"}`,
             boxShadow: `0 0 8px 2px ${STATUS_COLORS[discordStatus.status]}88`,
-            transition: "background 0.5s, box-shadow 0.5s" }}
+            transition: "background 0.5s, box-shadow 0.5s"
+          }}
             title={STATUS_LABELS[discordStatus.status]} />
 
           {/* Orb body */}
-          <div style={{ width: ORB_SIZE, height: ORB_SIZE, borderRadius: "50%",
+          <div style={{
+            width: ORB_SIZE, height: ORB_SIZE, borderRadius: "50%",
             background: eggMode
               ? "radial-gradient(circle at 32% 30%, gold 0%, #ff7e5f 40%, #1e1e1e 100%)"
               : "radial-gradient(circle at 32% 30%, #ffb3a0 0%, #ff7e5f 28%, #1e3a5f 68%, #0a1a2e 100%)",
@@ -788,28 +827,39 @@ function OrbitalSystem({
               : "0 0 30px 10px rgba(255,126,95,0.28), 0 0 70px 18px rgba(36,59,85,0.32)",
             display: "flex", alignItems: "center", justifyContent: "center",
             flexDirection: "column", animation: "pulse-orb 3.5s ease-in-out infinite",
-            position: "relative", overflow: "hidden", transition: "box-shadow 0.35s ease, background 0.5s" }}>
+            position: "relative", overflow: "hidden", transition: "box-shadow 0.35s ease, background 0.5s"
+          }}>
 
-            <span style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: "1.9rem",
+            <span style={{
+              fontFamily: "'Bebas Neue',sans-serif", fontSize: "1.9rem",
               letterSpacing: "0.04em", color: "rgba(255,255,255,0.92)", lineHeight: 1,
               opacity: orbExpanded ? 0 : 1, transition: "opacity 0.18s ease", userSelect: "none",
-              position: "absolute" }}>{eggMode ? "🌟" : "ρ₁"}</span>
+              position: "absolute"
+            }}>{eggMode ? "🌟" : "ρ₁"}</span>
 
-            <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column",
+            <div style={{
+              position: "absolute", inset: 0, display: "flex", flexDirection: "column",
               alignItems: "center", justifyContent: "center",
-              opacity: orbExpanded ? 1 : 0, transition: "opacity 0.22s ease 0.1s" }}>
-              <span style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: "1.1rem",
-                color: "rgba(255,255,255,0.96)", letterSpacing: "0.09em" }}>ROHAN</span>
-              <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.48rem",
+              opacity: orbExpanded ? 1 : 0, transition: "opacity 0.22s ease 0.1s"
+            }}>
+              <span style={{
+                fontFamily: "'Bebas Neue',sans-serif", fontSize: "1.1rem",
+                color: "rgba(255,255,255,0.96)", letterSpacing: "0.09em"
+              }}>ROHAN</span>
+              <span style={{
+                fontFamily: "'DM Sans',sans-serif", fontSize: "0.48rem",
                 color: "rgba(255,210,195,0.82)", letterSpacing: "0.18em", marginTop: "3px",
-                textTransform: "uppercase" }}>
+                textTransform: "uppercase"
+              }}>
                 {discordStatus.spotify ? `🎧 ${discordStatus.spotify.song}` : "DEV / BUILDER"}
               </span>
             </div>
 
-            <div style={{ position: "absolute", inset: 0, borderRadius: "50%",
+            <div style={{
+              position: "absolute", inset: 0, borderRadius: "50%",
               background: "radial-gradient(circle at 68% 18%, rgba(255,255,255,0.14) 0%, transparent 58%)",
-              pointerEvents: "none" }} />
+              pointerEvents: "none"
+            }} />
           </div>
         </div>
 
@@ -834,7 +884,8 @@ function OrbitalSystem({
                 hoveredIdx.current = null;
                 pausedRef.current = false;
               }}
-              style={{ position: "absolute", width: NODE_SIZE, height: NODE_SIZE, borderRadius: "50%",
+              style={{
+                position: "absolute", width: NODE_SIZE, height: NODE_SIZE, borderRadius: "50%",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 background: d ? "rgba(6,10,18,0.65)" : "rgba(245,245,240,0.75)",
                 border: `1px solid ${isLast ? node.color + "aa" : node.color + "55"}`,
@@ -842,33 +893,38 @@ function OrbitalSystem({
                 color: node.color, willChange: "transform, opacity, filter",
                 textDecoration: "none", cursor: "pointer",
                 transition: "box-shadow 0.22s ease, border-color 0.22s ease",
-                boxShadow: `0 0 14px 2px ${node.glow.replace("0.7","0.18")}, inset 0 0 10px 0 ${node.color}0e` }}
+                boxShadow: `0 0 14px 2px ${node.glow.replace("0.7", "0.18")}, inset 0 0 10px 0 ${node.color}0e`
+              }}
               onMouseOver={e => {
                 const el = e.currentTarget;
-                el.style.boxShadow = `0 0 38px 12px ${node.glow}, 0 0 80px 24px ${node.glow.replace("0.7","0.18")}, inset 0 0 22px 0 ${node.color}22`;
+                el.style.boxShadow = `0 0 38px 12px ${node.glow}, 0 0 80px 24px ${node.glow.replace("0.7", "0.18")}, inset 0 0 22px 0 ${node.color}22`;
                 el.style.borderColor = `${node.color}cc`;
               }}
               onMouseOut={e => {
                 const el = e.currentTarget;
-                el.style.boxShadow = `0 0 14px 2px ${node.glow.replace("0.7","0.18")}, inset 0 0 10px 0 ${node.color}0e`;
+                el.style.boxShadow = `0 0 14px 2px ${node.glow.replace("0.7", "0.18")}, inset 0 0 10px 0 ${node.color}0e`;
                 el.style.borderColor = `${node.color}${isLast ? "aa" : "55"}`;
               }}
             >
               <node.Icon size={24} strokeWidth={1.5} />
               {/* Memory indicator */}
               {isLast && (
-                <div style={{ position: "absolute", top: -3, right: -3, width: 10, height: 10,
+                <div style={{
+                  position: "absolute", top: -3, right: -3, width: 10, height: 10,
                   borderRadius: "50%", background: node.color,
                   boxShadow: `0 0 6px 2px ${node.glow}`,
-                  animation: "pulse-orb 2s ease-in-out infinite" }} />
+                  animation: "pulse-orb 2s ease-in-out infinite"
+                }} />
               )}
               {/* Discord presence dot */}
               {isDiscord && (
-                <div style={{ position: "absolute", bottom: -2, right: -2, width: 14, height: 14,
+                <div style={{
+                  position: "absolute", bottom: -2, right: -2, width: 14, height: 14,
                   borderRadius: "50%", background: STATUS_COLORS[discordStatus.status],
                   border: `2px solid ${d ? "#060a12" : "#f5f5f0"}`,
                   boxShadow: `0 0 6px 2px ${STATUS_COLORS[discordStatus.status]}88`,
-                  transition: "background 0.5s" }} />
+                  transition: "background 0.5s"
+                }} />
               )}
             </a>
           );
@@ -876,11 +932,13 @@ function OrbitalSystem({
       </div>
 
       {/* Keyboard hint */}
-      <div style={{ position: "absolute", bottom: "2rem", left: "50%", transform: "translateX(-50%)",
+      <div style={{
+        position: "absolute", bottom: "2rem", left: "50%", transform: "translateX(-50%)",
         fontFamily: "'DM Sans',sans-serif", fontSize: "0.55rem", letterSpacing: "0.3em",
         color: d ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.18)", textTransform: "uppercase",
         opacity: visible ? 1 : 0, transition: "opacity 1s ease 1.5s",
-        whiteSpace: "nowrap" }}>
+        whiteSpace: "nowrap"
+      }}>
         space — pause &nbsp;·&nbsp; ← → — rotate &nbsp;·&nbsp; enter — open
       </div>
     </>
@@ -899,7 +957,8 @@ function ThemeToggle({ theme, onToggle }: { theme: Theme; onToggle: () => void }
   return (
     <button
       onClick={handleClick}
-      style={{ position: "fixed", top: "1.5rem", right: "1.5rem", zIndex: 50,
+      style={{
+        position: "fixed", top: "1.5rem", right: "1.5rem", zIndex: 50,
         width: 44, height: 44, borderRadius: "50%", border: "none", cursor: "pointer",
         background: d ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)",
         backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)",
@@ -907,7 +966,8 @@ function ThemeToggle({ theme, onToggle }: { theme: Theme; onToggle: () => void }
         fontSize: "1.2rem", transition: "background 0.3s, box-shadow 0.3s",
         boxShadow: d ? "0 0 20px rgba(255,126,95,0.15)" : "0 0 20px rgba(0,0,0,0.08)",
         transform: flip ? "rotateY(180deg) scale(0.85)" : "rotateY(0) scale(1)",
-        transitionProperty: "transform, background, box-shadow" }}
+        transitionProperty: "transform, background, box-shadow"
+      }}
       aria-label="Toggle theme"
       title={d ? "Switch to light mode" : "Switch to dark mode"}
     >
@@ -927,14 +987,14 @@ function useDiscordStatus(): DiscordStatus {
     const fetchStatus = async () => {
       try {
         const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-        const BACKEND_URL = isLocal 
-          ? "http://127.0.0.1:8888" 
-          : (process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8888"); 
+        const BACKEND_URL = isLocal
+          ? "http://127.0.0.1:8888"
+          : (process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8888");
 
         const res = await fetch(`${BACKEND_URL}/status`);
         const json = await res.json();
         if (!json.success) return;
-        
+
         const d = json.data;
         setStatus({
           status: d.status === "dnd" || d.status === "online" || d.status === "idle" ? d.status : "offline",
@@ -1071,16 +1131,16 @@ export default function Home() {
 
       <CursorTrail theme={theme} />
       <ThemeToggle theme={theme} onToggle={() => setTheme(t => t === "dark" ? "light" : "dark")} />
-      
+
       {/* 🌪️ Reactive Global Atmosphere 🌪️ */}
       <AuraBackground status={discordStatus} />
 
       {/* Legacy Redirection Link */}
-      <a 
-        href="https://rohanofficial.netlify.app" 
-        target="_blank" 
+      <a
+        href="https://rohanofficial.netlify.app"
+        target="_blank"
         rel="noopener noreferrer"
-        style={{ 
+        style={{
           position: "fixed", bottom: "1.5rem", right: "2rem", zIndex: 100,
           fontFamily: "'DM Sans',sans-serif", fontSize: "0.55rem", letterSpacing: "0.2em",
           color: d ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.2)", textTransform: "uppercase",
@@ -1094,16 +1154,20 @@ export default function Home() {
       </a>
 
       <div ref={containerRef}
-        style={{ position: "fixed", inset: 0, overflow: "hidden",
-          background: d ? "#060a12" : "#f5f5f0", transition: "background 0.6s ease" }}>
+        style={{
+          position: "fixed", inset: 0, overflow: "hidden",
+          background: d ? "#060a12" : "#f5f5f0", transition: "background 0.6s ease"
+        }}>
 
         <ParallaxBg theme={theme} />
 
         {/* ── HERO ── */}
-        <div style={{ ...panelBase,
+        <div style={{
+          ...panelBase,
           opacity: section === "hero" ? 1 : 0,
           transform: section === "hero" ? "translateY(0)" : "translateY(-55px)",
-          pointerEvents: section === "hero" ? "auto" : "none" }}>
+          pointerEvents: section === "hero" ? "auto" : "none"
+        }}>
 
           <div style={{ animation: "fade-up 0.7s ease both" }}>
             <GlitchTitle theme={theme} />
@@ -1111,13 +1175,15 @@ export default function Home() {
           <div style={{ animation: "fade-up 0.6s ease 0.18s both" }}>
             <TypingTag theme={theme} />
           </div>
-          <div style={{ width: "clamp(70px,12vw,160px)", height: "1px",
+          <div style={{
+            width: "clamp(70px,12vw,160px)", height: "1px",
             background: "linear-gradient(90deg,transparent,rgba(255,126,95,0.5),transparent)",
-            marginTop: "1.8rem", animation: "fade-up 0.5s ease 0.35s both" }} />
+            marginTop: "1.8rem", animation: "fade-up 0.5s ease 0.35s both"
+          }} />
 
           {/* ⚡ RICH DISCORD STATUS CARD ⚡ */}
           <div className="rich-status-card" style={{ marginTop: "2rem", animation: "fade-up 0.5s ease 0.5s both", width: "100%", maxWidth: "320px" }}>
-            <div style={{ 
+            <div style={{
               background: d ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)",
               border: `1px solid ${d ? "rgba(255,126,95,0.15)" : "rgba(180,60,30,0.1)"}`,
               borderRadius: "16px", padding: "12px", backdropFilter: "blur(10px)",
@@ -1126,47 +1192,61 @@ export default function Home() {
               {/* Media/App Cover */}
               <div style={{ position: "relative", flexShrink: 0 }}>
                 {discordStatus.spotify?.albumArt || discordStatus.assets?.largeImage ? (
-                  <img 
-                    src={discordStatus.spotify?.albumArt || discordStatus.assets?.largeImage} 
+                  <img
+                    src={discordStatus.spotify?.albumArt || discordStatus.assets?.largeImage}
                     alt="Cover"
-                    style={{ width: "52px", height: "52px", borderRadius: "8px", objectFit: "cover",
-                             filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.2))" }}
+                    style={{
+                      width: "52px", height: "52px", borderRadius: "8px", objectFit: "cover",
+                      filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.2))"
+                    }}
                   />
                 ) : (
-                  <div style={{ width: "52px", height: "52px", borderRadius: "8px", 
-                                background: d ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)",
-                                display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{
+                    width: "52px", height: "52px", borderRadius: "8px",
+                    background: d ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)",
+                    display: "flex", alignItems: "center", justifyContent: "center"
+                  }}>
                     <MessageCircle size={20} opacity={0.3} />
                   </div>
                 )}
                 {/* Small indicator */}
-                <div style={{ position: "absolute", bottom: "-3px", right: "-3px", width: "16px", height: "16px",
-                              borderRadius: "50%", background: STATUS_COLORS[discordStatus.status],
-                              border: `2px solid ${d ? "#060a12" : "#f5f5f0"}`,
-                              boxShadow: `0 0 8px ${STATUS_COLORS[discordStatus.status]}88` }} />
+                <div style={{
+                  position: "absolute", bottom: "-3px", right: "-3px", width: "16px", height: "16px",
+                  borderRadius: "50%", background: STATUS_COLORS[discordStatus.status],
+                  border: `2px solid ${d ? "#060a12" : "#f5f5f0"}`,
+                  boxShadow: `0 0 8px ${STATUS_COLORS[discordStatus.status]}88`
+                }} />
               </div>
 
               {/* Info text */}
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom: "2px" }}>
-                  <span style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: "0.85rem", letterSpacing: "0.05em",
-                                 color: "#ff7e5f" }}>
+                  <span style={{
+                    fontFamily: "'Bebas Neue',sans-serif", fontSize: "0.85rem", letterSpacing: "0.05em",
+                    color: "#ff7e5f"
+                  }}>
                     {discordStatus.activity || (discordStatus.customStatus ? "Thinking" : "Live Status")}
                   </span>
                   <span style={{ fontSize: "0.6rem", opacity: 0.3 }}>—</span>
-                  <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.58rem", 
-                                 textTransform: "uppercase", letterSpacing: "0.1em", color: "#54a0ff", fontWeight: 700 }}>
+                  <span style={{
+                    fontFamily: "'DM Sans',sans-serif", fontSize: "0.58rem",
+                    textTransform: "uppercase", letterSpacing: "0.1em", color: "#54a0ff", fontWeight: 700
+                  }}>
                     {discordStatus.customStatus?.text || STATUS_LABELS[discordStatus.status]}
                   </span>
                 </div>
 
-                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.78rem", fontWeight: 500,
-                               color: d ? "#fff" : "#000", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                <div style={{
+                  fontFamily: "'DM Sans',sans-serif", fontSize: "0.78rem", fontWeight: 500,
+                  color: d ? "#fff" : "#000", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"
+                }}>
                   {discordStatus.spotify ? discordStatus.spotify.song : (discordStatus.details || "Chilling...")}
                 </div>
-                
-                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.68rem", opacity: 0.6, color: "#ffb3a0",
-                               overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginTop: "1px" }}>
+
+                <div style={{
+                  fontFamily: "'DM Sans',sans-serif", fontSize: "0.68rem", opacity: 0.6, color: "#ffb3a0",
+                  overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginTop: "1px"
+                }}>
                   {discordStatus.spotify ? discordStatus.spotify.artist : (discordStatus.state || "")}
                 </div>
               </div>
@@ -1174,13 +1254,17 @@ export default function Home() {
           </div>
 
           {/* Scroll cue */}
-          <div style={{ position: "absolute", bottom: "2.5rem",
+          <div style={{
+            position: "absolute", bottom: "2.5rem",
             display: "flex", flexDirection: "column", alignItems: "center", gap: "6px",
-            animation: "scroll-bounce 2.2s ease-in-out infinite", cursor: "pointer" }}
+            animation: "scroll-bounce 2.2s ease-in-out infinite", cursor: "pointer"
+          }}
             onClick={goOrbit}>
-            <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.58rem",
+            <span style={{
+              fontFamily: "'DM Sans',sans-serif", fontSize: "0.58rem",
               letterSpacing: "0.35em", color: d ? "rgba(255,255,255,0.18)" : "rgba(0,0,0,0.2)",
-              textTransform: "uppercase" }}>scroll</span>
+              textTransform: "uppercase"
+            }}>scroll</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M7 1v12M3 9l4 4 4-4"
                 stroke={d ? "rgba(255,255,255,0.18)" : "rgba(0,0,0,0.2)"}
@@ -1190,27 +1274,32 @@ export default function Home() {
         </div>
 
         {/* ── ORBIT ── */}
-        <div style={{ ...panelBase,
+        <div style={{
+          ...panelBase,
           opacity: section === "orbit" ? 1 : 0,
           transform: section === "orbit" ? "translateY(0)" : "translateY(55px)",
-          pointerEvents: section === "orbit" ? "auto" : "none" }}>
+          pointerEvents: section === "orbit" ? "auto" : "none"
+        }}>
 
-          <h1 className="hero-title" style={{ 
+          <h1 className="hero-title" style={{
             fontFamily: "'Bebas Neue',sans-serif",
             fontSize: "12vw",
             letterSpacing: "0.06em",
             color: "transparent",
             WebkitTextStroke: `1px ${d ? "rgba(255,255,255,0.032)" : "rgba(0,0,0,0.04)"}`,
-            userSelect: "none", pointerEvents: "none" }}>ROHAN</h1>
+            userSelect: "none", pointerEvents: "none"
+          }}>ROHAN</h1>
 
           <div className="orbital-system" style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
             <OrbitalSystem visible={orbVisible} theme={theme} discordStatus={discordStatus} />
           </div>
 
           {/* Back */}
-          <div style={{ position: "absolute", top: "2rem", left: "50%", transform: "translateX(-50%)",
+          <div style={{
+            position: "absolute", top: "2rem", left: "50%", transform: "translateX(-50%)",
             display: "flex", alignItems: "center", gap: "6px", cursor: "pointer",
-            opacity: orbVisible ? 0.28 : 0, transition: "opacity 0.5s ease", userSelect: "none" }}
+            opacity: orbVisible ? 0.28 : 0, transition: "opacity 0.5s ease", userSelect: "none"
+          }}
             onClick={goHero}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.7"; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "0.28"; }}>
@@ -1219,10 +1308,12 @@ export default function Home() {
                 stroke={d ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.5)"}
                 strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.58rem",
+            <span style={{
+              fontFamily: "'DM Sans',sans-serif", fontSize: "0.58rem",
               letterSpacing: "0.35em",
               color: d ? "rgba(255,255,255,0.6)" : "rgba(0,0,0,0.4)",
-              textTransform: "uppercase" }}>back</span>
+              textTransform: "uppercase"
+            }}>back</span>
           </div>
         </div>
       </div>
